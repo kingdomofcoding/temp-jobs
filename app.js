@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("express-async-errors");
+const path = require("path");
 
 //extra security packages
 const helmet = require("helmet");
@@ -51,6 +52,12 @@ app.use(xss());
 //routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticationMiddleware, jobsRouter);
+
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 //middleware
 app.use(notFoundMiddleware);
