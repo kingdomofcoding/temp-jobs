@@ -7,7 +7,6 @@ const getAllJobs = async (req, res) => {
   //only looking for jobs associated with the user
   const jobs = await Job.find({ createdBy: req.user.userId });
   res.status(StatusCodes.OK).json({ jobs, count: jobs.length || 0 });
-  res.send(`getAllJobs user`);
 };
 const getJob = async (req, res) => {
   const {

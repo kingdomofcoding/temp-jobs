@@ -7,12 +7,7 @@ const authenticationMiddleware = async (req, res, next) => {
     throw new UnauthenticatedError("token not exists");
   }
   const token = authHeaders.split(" ")[1];
-  console.log(
-    "@@@@@@@@@@@@@@@@@@@@@@@@",
-    token,
-    req.name,
-    "@@@@@@@@@@@@@@@@@@@@@@@@"
-  );
+
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const user = User.findById(decodedToken.id).select("-password");

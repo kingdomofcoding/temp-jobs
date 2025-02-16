@@ -8,6 +8,10 @@ const cors = require("cors");
 const xss = require("xss-clean");
 const rateLimiter = require("express-rate-limit");
 
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./swagger.yaml");
+
 const express = require("express");
 const app = express();
 const authenticationMiddleware = require("./middleware/authentication.js");
@@ -33,22 +37,9 @@ app.use(helmet());
 app.use(cors());
 app.use(xss());
 
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 //
-// const allowedOrigins = ["http://localhost:3001", "http://another-origin.com"];
 
-// app.use((req, res, next) => {
-//   const origin = req.headers.origin;
-//   if (allowedOrigins.includes(origin)) {
-//     res.header("Access-Control-Allow-Origin", origin);
-//   }
-//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   // Handle preflight request
-//   if (req.method === "OPTIONS") {
-//     return res.status(200).end();
-//   }
-//   next();
-// });
 //routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticationMiddleware, jobsRouter);
