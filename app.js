@@ -44,13 +44,6 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticationMiddleware, jobsRouter);
 
-// Serve React App from 'client/build'
-app.use(express.static(path.join(__dirname, "client", "build")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
-
 //middleware
 app.use(notFoundMiddleware);
 app.use(errorHandlingMiddleware);
