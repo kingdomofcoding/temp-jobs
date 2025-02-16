@@ -3,7 +3,7 @@ info:
   title: 06_JOBSTER_API
   version: 1.0.0
 servers:
-  - url: http://localhost:3000
+  - url: https://temp-jobs-5klq.onrender.com
 components:
   securitySchemes:
     noauthAuth:
@@ -13,7 +13,7 @@ components:
       type: http
       scheme: bearer
 paths:
-  /auth/register:
+  /api/v1/auth/register:
     post:
       tags:
         - General
@@ -34,7 +34,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /auth/login:
+  /api/v1/auth/login:
     post:
       tags:
         - General
@@ -62,11 +62,11 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /jobs/:
+  /api/v1/jobs:
     post:
       tags:
         - General
-      summary: create A job
+      summary: Create a job
       requestBody:
         content:
           application/json:
@@ -99,23 +99,29 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /jobs/67ac8a872c1df21054c14bb4:
+  /api/v1/jobs/{id}:
     get:
       tags:
         - General
       summary: Get single job
       security:
         - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "67ac8a872c1df21054c14bb4"
       responses:
         "200":
           description: Successful response
           content:
             application/json: {}
-  /jobs/67ac8adb2c1df21054c14bba:
     patch:
       tags:
         - General
-      summary: update job
+      summary: Update job
       requestBody:
         content:
           application/json:
@@ -126,6 +132,13 @@ paths:
                 position: "11111111111111"
       security:
         - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "67ac8a872c1df21054c14bba"
       responses:
         "200":
           description: Successful response
@@ -134,9 +147,16 @@ paths:
     delete:
       tags:
         - General
-      summary: delete job
+      summary: Delete job
       security:
         - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "67ac8a872c1df21054c14bba"
       responses:
         "200":
           description: Successful response

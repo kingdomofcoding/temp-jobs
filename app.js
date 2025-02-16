@@ -37,13 +37,17 @@ app.use(helmet());
 app.use(cors());
 app.use(xss());
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the API");
+});
+
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 //
-
+//
 //routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticationMiddleware, jobsRouter);
-
+//
 //middleware
 app.use(notFoundMiddleware);
 app.use(errorHandlingMiddleware);
